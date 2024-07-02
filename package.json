@@ -1,0 +1,23 @@
+{
+  "name": "proizvodstvennaya_practica",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "build": "node ./build/esbuild.js --dev",
+    "build:meta": "node ./build/esbuild.js --dev --meta",
+    "build:meta:prod": "node ./build/esbuild.js --meta",
+    "build:prod": "node ./build/esbuild.js",
+    "docker:build": "docker build --rm -t proizvodstvennaya_practica:latest .",
+    "docker:deploy": "sh ./scripts/deploy.sh",
+    "start": "node ./build/esbuild.js --dev --watch --run",
+    "start:ci": "node ./build/esbuild.js --run",
+    "start:prod": "node ./build/esbuild.js --watch --run"
+  },
+  "devDependencies": {
+    "@es-exec/esbuild-plugin-start": "^0.0.5",
+    "@types/node": "^18.19.31",
+    "esbuild": "^0.20.2",
+    "minimist": "^1.2.8",
+    "typescript": "^5.4.5"
+  }
+}
