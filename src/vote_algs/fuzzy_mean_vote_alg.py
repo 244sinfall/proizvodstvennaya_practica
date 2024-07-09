@@ -7,7 +7,7 @@ from contracts.vote_alg import VoteAlg
 from exceptions.vote_exception import VoteException
 
 
-class MeanVoteAlg(VoteAlg):
+class FuzzyMeanVoteAlg(VoteAlg):
     """Vote algorithm that calculates weight map based on 
 unique entity confidence. The entity with max mean weight wins"""
     def run_vote(self, data: list[ConfidenceBaseVoteData]) -> ConfidenceBaseVoteData:
