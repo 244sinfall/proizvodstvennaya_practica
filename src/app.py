@@ -6,7 +6,7 @@ from contracts.vote_alg import VoteAlg
 
 from composers.version_composer import VersionComposer
 from databases.sqlite import SqliteVoteDatabase
-from vote_algs.fuzzy_vote_alg import FuzzyVoteAlg
+from vote_algs.fuzzy_relative_vote_alg import FuzzyRelativeVoteAlg
 from exceptions.vote_exception import VoteException
 
 
@@ -49,6 +49,6 @@ if __name__ == "__main__":
     app = App(
         SqliteVoteDatabase(args.path, args.query),
         VersionComposer(),
-        FuzzyVoteAlg()
+        FuzzyRelativeVoteAlg()
     )
     app.run()
