@@ -9,3 +9,7 @@ class ConfidenceBaseVoteData(VoteData):
     @abstractmethod
     def get_confidence(self) -> float:
         """Return referenced / calculate confidence"""
+    @abstractmethod
+    def get_identifier(self) -> str | int:
+        """Must return unique entity identifier,
+          as it is needed to choose winner"""

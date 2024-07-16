@@ -7,6 +7,5 @@ from pydantic import BaseModel
 class VoteData(ABC, BaseModel):
     """General interface for any vote data"""
     @abstractmethod
-    def get_identifier(self) -> str | int:
-        """Must return unique entity identifier,
-          as it is needed to choose winner"""
+    def get_value(self) -> str | int | float:
+        """Value to vote on"""

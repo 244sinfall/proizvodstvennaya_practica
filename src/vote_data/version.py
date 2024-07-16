@@ -24,5 +24,8 @@ class Version(ConfidenceBaseVoteData, BaseModel):
     def get_confidence(self) -> float:
         return self.version_reliability
 
+    def get_value(self) -> str | int | float:
+        return self.correct_answer
+
     def __str__(self) -> str:
-        return f"Version ID: {self.version_id}, Version Name: {self.version_name}"
+        return f"Module: {self.module_id}, Iteration: {self.module_iteration_num}, Answer: {self.correct_answer}"

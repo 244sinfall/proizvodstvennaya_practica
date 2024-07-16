@@ -3,11 +3,12 @@ import argparse
 from contracts.composer import VoteDataComposer
 from contracts.database import VoteDatabase
 from contracts.vote_alg import VoteAlg
+from contracts.vote_arranger import DefaultVoteArranger
 
 from composers.version_composer import VersionComposer
 from databases.sqlite import SqliteVoteDatabase
-from vote_algs.fuzzy_relative_vote_alg import FuzzyRelativeVoteAlg
-from exceptions.vote_exception import VoteException
+from vote_algs.fuzzy_relative_weight_vote_alg import FuzzyRelativeWeightVoteAlg
+from vote_arrangers.version_vote_arranger import VersionVoteArranger
 
 
 class App:
@@ -15,20 +16,20 @@ class App:
     def __init__(self,
                  database: VoteDatabase,
                  composer: VoteDataComposer,
-                 alg: VoteAlg) -> None:
+                 alg: VoteAlg,
+                 arranger: DefaultVoteArranger = DefaultVoteArranger()) -> None:
         self.database = database
         self.composer = composer
         self.alg = alg
+        self.arranger = arranger
 
     def run(self):
         """Runs alg and prints winner"""
         raw = self.database.get_data()
+        print(f'Winner selected based on {self.alg.__class__.__name__} algorithm')
         data = [self.composer.compose(entity) for entity in raw]
-        try:
-            winner = self.alg.run_vote(data)
-            print(f'Winner selected based on {self.alg.__class__.__name__} algorithm: {winner}')
-        except VoteException as e:
-            print(e)
+        self.arranger.arrange(self.alg, data)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -47,8 +48,9 @@ if __name__ == "__main__":
                           required=True)
     args = parser.parse_args()
     app = App(
-        SqliteVoteDatabase(args.path, args.query),
-        VersionComposer(),
-        FuzzyRelativeVoteAlg()
+        database=SqliteVoteDatabase(args.path, args.query),
+        composer=VersionComposer(),
+        alg=FuzzyRelativeWeightVoteAlg(),
+        arranger=VersionVoteArranger()
     )
     app.run()
