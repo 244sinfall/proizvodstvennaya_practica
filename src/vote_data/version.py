@@ -18,9 +18,6 @@ class Version(ConfidenceBaseVoteData, BaseModel):
     module_iteration_num: int
     experiment_name: str
 
-    def get_identifier(self) -> str:
-        return self.version_name
-
     def get_confidence(self) -> float:
         return self.version_reliability
 
