@@ -17,8 +17,8 @@ unique entity confidence. The entity with max weight relative to others wins"""
         """
         confidence_map: dict[str | int | float, float] = {}
         # Iterate over each option
-        max_confidence: float = 0
-        winner: ConfidenceBaseVoteData | None
+        max_confidence: float = -1
+        winner: ConfidenceBaseVoteData | None = None
         for entity in data:
             confidence = entity.get_confidence()
             val = entity.get_value()
@@ -26,9 +26,9 @@ unique entity confidence. The entity with max weight relative to others wins"""
                 confidence_map[val] = confidence
             else:
                 confidence_map[val] += confidence
-                if confidence_map[val] > max_confidence:
-                    max_confidence = confidence_map[val]
-                    winner = entity
+            if confidence_map[val] > max_confidence:
+                max_confidence = confidence_map[val]
+                winner = entity
         if not winner:
             raise VoteException(f"No winner for {data}")
         return winner
