@@ -1,3 +1,4 @@
+"""VoteArranger is an entity that describes vote arranging strategy"""
 from contracts.vote_alg import VoteAlg
 from contracts.vote_data import VoteData
 

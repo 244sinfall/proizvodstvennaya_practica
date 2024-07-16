@@ -28,4 +28,5 @@ class Version(ConfidenceBaseVoteData, BaseModel):
         return self.correct_answer
 
     def __str__(self) -> str:
-        return f"Module: {self.module_id}, Iteration: {self.module_iteration_num}, Answer: {self.correct_answer}"
+        return f"Module: {self.module_id}, Iteration: {self.module_iteration_num}, " + \
+            f"Answer: {self.correct_answer}"
