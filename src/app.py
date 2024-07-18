@@ -1,5 +1,6 @@
 """App init"""
 import argparse
+from classifiers.tens_classifier import TensClassifier
 from contracts.composer import VoteDataComposer
 from contracts.database import VoteDatabase
 from contracts.vote_alg import VoteAlg
@@ -7,7 +8,7 @@ from contracts.vote_arranger import DefaultVoteArranger
 
 from composers.version_composer import VersionComposer
 from databases.sqlite import SqliteVoteDatabase
-from vote_algs.fuzzy_relative_weight_vote_alg import FuzzyRelativeWeightVoteAlg
+from vote_algs.fuzzy_relative_classification_vote_alg import FuzzyRelativeClassificationVoteAlg
 from vote_arrangers.version_vote_arranger import VersionVoteArranger
 
 
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     app = App(
         database=SqliteVoteDatabase(args.path, args.query),
         composer=VersionComposer(),
-        alg=FuzzyRelativeWeightVoteAlg(),
+        alg=FuzzyRelativeClassificationVoteAlg(TensClassifier()),
         arranger=VersionVoteArranger()
     )
     app.run()
